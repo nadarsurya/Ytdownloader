@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtupe downloader</title>
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/npm/cdnfiles_2502@1.0.0/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        html {
+            height: -webkit-fill-available; 
+        }
+
+        body { 
+            font-family: Roboto, sans-serif;
+            font-size: 15px;
+            background-image: url("https://cdn.jsdelivr.net/npm/cdnfiles_2502@1.0.0/ytdlbackground.jpg");
+            background-repeat: no-repeat;
+            background-size: cover; 
+            background-attachment: fixed;
+            background-position: center;
+            height: 100vh;
+            /* Use min-height: 100%; */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: -webkit-fill-available;
+        }
+
+
+        *,
+        ::after,
+        ::before {
+            box-sizing: border-box;
+        }
+
+
+        .container {
+            width: 100%;
+            padding-right: calc(1.5rem * .5);
+            padding-left: calc(1.5rem * .5);
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .footercontaier {
+            text-align: center;
+            border-top: 3px solid white;
+            color: white;
+            padding-top: 20px;
+
+        }
+
+        #section1 {
+            margin-top: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #section2 {
+            margin: 40px auto;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        #input-box {
+            box-sizing: border-box;
+            box-shadow: none;
+            border-radius: 5px;
+            height: 56px;
+            padding: 17px 20px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search {
+            background: #f00;
+            border-radius: 5px;
+            padding: 18px 40px;
+            display: inline-block;
+            border: none;
+            color: #fdfdfe;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+            max-height: 56px;
+            margin-left: 5px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .download-btn {
+            background: #0321b3;
+            border-radius: 5px;
+            padding: 10px;
+            border: none;
+            color: #fdfdfe;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+        }
+
+        table {
+            width: 100%;
+            background-color: white;
+            border: 3px solid rgba(0, 0, 0, 0.25);
+            border-top: none;
+            border-collapse: collapse;
+            max-height: 300px;
+            overflow-y: auto;
+            border-right: none;
+        }
+
+        tbody {
+            display: flex;
+            flex-direction: column;
+        }
+
+        tr {
+            transition: .1s;
+            padding-right: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid black;
+        }
+
+        td {
+            padding: 20px;
+            width: calc(100% / 4);
+        }
+
+        .mp3 {
+            display: none;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #24282c;
+            color: white;
+            display: flex;
+            height: 40px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        nav label.active {
+            background-color: #f00;
+        }
+
+        #video {
+            border-top-left-radius: 5px;
+        }
+
+        #audio {
+            border-top-right-radius: 5px;
+        }
+
+        nav label {
+            width: calc(100% / 2);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all .5s;
+        }
+
+        .thumb {
+            height: 200px;
+            width: 100%
+        }
+
+        .text-trim {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            max-height: 3em;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+
+        }
+
+        .input-box {
+            display: grid;
+            grid-template-columns: 4fr 1fr;
+        }
+
+        .thumb-box {
+            background-color: white;
+            padding: 2px;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            row-gap: 5px;
+        }
+
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #9fa5a6;
+        }
+
+        @media screen and (min-width: 576px) {
+
+            .container,
+            .container-sm {
+                width: 540px;
+            }
+        }
+
+        @media screen and (min-width: 768px) {
+
+            .container,
+            .container-sm {
+                width: 720px;
+            }
+        }
+
+        @media screen and (min-width: 992px) {
+
+            .container,
+            .container-sm {
+                width: 960px;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+            }
+
+            table {
+                min-height: 250px;
+            }
+
+            .download-btn::after {
+                content: 'Download';
+            }
+        }
+
+
+
+        @media screen and (min-width: 1200px) {
+            .container {
+                width: 1140px;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .container-sm {
+                width: 100%
+            }
+
+            .input-box {
+                width: 100%;
+                display: grid;
+                grid-template-columns: 1fr;
+                place-items: center;
+                row-gap: 10px;
+            }
+
+            #input-box {
+                width: 100%;
+            }
+
+            table {
+                max-height: fit-content;
+            }
+
+            #section1 {
+                margin-top: 40px;
+            }
+
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 992px) {
+            .thumb {
+                height: 300px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <section class="container" id="section1">
+            <h1 style="color: #f00;">Youtube Downloader</h1>
+            <div class="input-box">
+                <input id="input-box" type="text" placeholder="Enter your yotube url">
+                <div><button class="search">search</button></div>
+            </div>
+        </section>
+        <section class="container" id="section2">
+        </section>
+    </main>
+    <footer>
+        <div class="container footercontaier">
+            <div>Made By Surya</div>
+        </div>
+    </footer>
+</body>
+<script>
+    'usestrict';
+
+
+    document.querySelector(".search").addEventListener('click', yt_search)
+
+    async function changebutton(event) {
+        this.className = 'active';
+        if (this.id === 'video') {
+            document.getElementById('audio').className = '';
+            mp3.style.display = "none";
+            mp4.style.display = "block";
+
+        } else {
+            document.getElementById('video').className = '';
+            mp3.style.display = "block";
+            mp4.style.display = "none";
+        }
+
+    }
+
+    async function yt_search() {
+        let res, input;
+        input = document.getElementById('input-box')
+        data = new URLSearchParams({ query: input.value, vt: 'mp3' }).toString()
+        res = await fetch('/api/search', {
+            method: 'POST',
+            body: data,
+            headers: {
+                "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
+            }
+        })
+        if (res.ok) {
+            res = await res.json()
+            async function create_table(m) {
+                return Object.values(m).map(media =>
+                    `
+                    <tr>
+                        <td>${media.q}</td>
+                        <td>${media.f}</td>
+                        <td>${media.size || 'N/A'}</td>
+                        <td>
+                          <a type="button" href=${location.origin}/download?vid=${res.vid}&file=${encodeURIComponent(media.k)} target='_blank' class="download-btn">
+                            <i class="fa-solid fa-download"></i> 
+                          </a>
+                        </td>
+                    </tr>    
+                    `
+                ).join('')
+            }
+            section2 = document.getElementById('section2')
+            section2.innerHTML = `
+            <div class='grid'>
+                <div class='thumb-box'>
+                    <img class="thumb" src="https://i.ytimg.com/vi/${res.vid}/maxresdefault.jpg">
+                    <div class="text-trim">${res.title}</div>
+                    <div>Channel: ${res.a}</div>
+                </div>
+                
+                <div>
+                    <nav>
+                        <label class="active" id="video">
+                            <span>Video</span>
+                        </label>
+                        <label class="" id="audio">
+                            <span>Audio</span>
+                        </label>
+                    </nav>
+                    <table class="mp4" id="mp4">${await create_table(res.links.mp4)}</table>
+                    <table class="mp3" id="mp3">${await create_table(res.links.mp3)}</table>
+                </div>
+                
+            </div>
+            `
+            document.getElementById('audio').addEventListener('click', changebutton)
+            document.getElementById('video').addEventListener('click', changebutton)
+        }
+    }
+
+
+    async function generate_download_link() {
+        selection = document.getElementsByTagName('select')[0]
+        console.log(selection[selection.selectedIndex])
+    }
+</script>
+
+</html>
